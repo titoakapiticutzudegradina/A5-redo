@@ -1,5 +1,6 @@
 from PlaneClass import Plane
 from PassengerClass import Passenger
+from Logic import *
 
 class Airport:
     def __init__(self):
@@ -57,4 +58,34 @@ class Airport:
     def __str__(self):
         return f" {' '.join(str(plane) for plane in self.planes)}"
 
+    #Sort the passengers in a plane by lastName
+    #Input: id - int
+    #Output: -
+    def sortByLastName(self, id):
+        if type(id) != int:
+            raise ValueError("Argument must be an integer")
+        for plane in self.planes:
+            if plane.id == id:
+                sortf(plane.passengers, key = lambda x: x.lastName)
+                return
+        raise Exception("Plane not found")
     
+    #Sort the planes by the number of passengers
+    #Input: -
+    #Output: -
+    def sortBySeats(self):
+        sortf(self.planes, key = lambda x : x.seats)
+
+    #Sort the planes according to the number of passengers with the first name starting with a given substring
+    #Input: substring - string
+    #Output: -
+    def sortBySubString(self, substring):
+        if type(substring) != str:
+            raise ValueError("Argument must be a string")
+        sortf(self.planes, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName.startswith(substring))), reverse = True)
+
+    #Sort the planes according to the string obtained by concatenation of the number of passengers in the plane and the destination
+    #Input: -
+    #Output: -
+    def sortByConcatenation(self):
+        sortf(self.planes, key = lambda x : x.concatenation())

@@ -14,35 +14,35 @@ class Plane:
     def id (self):
         return self.__id
     @id.setter
-    def setId(self, id):
+    def id(self, id):
         self.__id = id
 
     @property
     def name(self):
         return self.__name
     @name.setter
-    def setName(self, name):
+    def name(self, name):
         self.__name = name
 
     @property
     def company(self):
         return self.__company
     @company.setter
-    def setCompany(self, company):
+    def company(self, company):
         self.__company = company
 
     @property
     def seats(self):
         return self.__seats
     @seats.setter
-    def setSeats(self, seats):
+    def seats(self, seats):
         self.__seats = seats
 
     @property
     def destination(self):
         return self.__destination
     @destination.setter
-    def setDestination(self, destination):
+    def destination(self, destination):
         self.__destination = destination
 
     @property
@@ -72,6 +72,9 @@ class Plane:
     def __repr__(self):
         return str(self)
     
+    def __eq__(self, other):
+        return self.__id == other.__id and self.__name == other.__name and self.__company == other.__company and self.__seats == other.__seats and self.__destination == other.__destination and self.__passengers == other.__passengers
+    
     #Removes a passenger from the plane(by passport)
     def removePassenger(self, passport):
         if type(passport) != int:
@@ -90,11 +93,15 @@ class Plane:
             raise ValueError("Argument must be a Passenger")
         for passenger in self.__passengers:
             if passenger.passport == passport:
-                passenger.fisrtName = newPassenger.firstName
+                passenger.firstName = newPassenger.firstName
                 passenger.lastName = newPassenger.lastName
                 passenger.passport = newPassenger.passport
                 return
         raise Exception("Passenger not found")
+    
+    #Concatenation of seats and the destination
+    def concatenation(self):
+        return f"{self.__seats} {self.__destination}"
     
 
     
