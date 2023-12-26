@@ -58,7 +58,7 @@ class Plane:
                 raise Exception("Plane is full")
         if type(passenger) == list:
             for p in passenger:
-                if len(self.__passengers) + len(passenger) < self.__seats:
+                if len(self.__passengers) < self.__seats:
                     self.__passengers.append(p)
                 else:
                     raise Exception("Plane is full")

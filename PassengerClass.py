@@ -27,7 +27,7 @@ class Passenger:
         self.__passport = passport
 
     def __str__(self):
-        return f"{self.__firstName} {self.__lastName} {self.__passport}"
+        return f"{self.__firstName} {self.__lastName} {self.__passport}\n"
     def __repr__(self):
         return str(self)
     

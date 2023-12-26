@@ -1,6 +1,9 @@
 from PlaneClass import Plane
 from PassengerClass import Passenger
 from Airpot import Airport
+from colorama import Fore, Style
+from os import system
+from time import sleep
 
 def test_addPassenger():
     plane = Plane(1, "Boeing", "WizzAir", 100, "Bucharest")
@@ -162,6 +165,44 @@ def test_sortByConcatenation():
     airpot.sortByConcatenation()
     assert airpot.planes == [p1, p4, p3, p2], "Should be " + str([p1, p4, p3, p2]) + ", but it is " + str(airpot.planes) + "(test_sortByConcatenation)"
 
+def test_filterByPassport():
+    airport = Airport()
+    p1 = Plane(1, "Boeing", "WizzAir", 100, "Bucharest")
+    p2 = Plane(2, "Airbus", "BlueAir", 200, "Paris")
+    p3 = Plane(3, "Boeing", "WizzAir", 150, "London")
+    airport.addPlane = p1
+    airport.addPlane = p2
+    airport.addPlane = p3
+    p1.addPassenger = [Passenger("John", "Doe", 1234), Passenger("Jane", "Smith", 1235), Passenger("John", "Smith", 1236), Passenger("Jane", "Doe", 1237) ]
+    p2.addPassenger = [Passenger("Raluca", "Cret", 1238), Passenger("Alexia", "Bora", 1239), Passenger("Carla", "Lupu", 1240), Passenger("Ioana", "Giurgea", 1241)]
+    p3.addPassenger = [Passenger("Gabi", "Hanu", 1242), Passenger("Mihai", "Ghilencea", 1243), Passenger("Teodora", "Catanas", 1244), Passenger("Diana", "Grigore", 1245)]
+    assert airport.filterByPassport(123) == [p1, p2], "Should be " + str([p1, p2]) + ", but it is " + str(airport.filterByPassport(123)) + "(test_filterByPassport)"
+    assert airport.filterByPassport(124) == [p2, p3], "Should be " + str([p2, p3]) + ", but it is " + str(airport.filterByPassport(124)) + "(test_filterByPassport)"
+    assert airport.filterByPassport(125) == [], "Should be empty, but it is " + str(airport.filterByPassport(125)) + "(test_filterByPassport)"
+
+def test_filterByName():
+    airport = Airport()
+    p1 = Plane(1, "Boeing", "WizzAir", 100, "Bucharest")
+    airport.addPlane = p1
+    p1.addPassenger = [Passenger("Gabi", "Hanu", 1242), Passenger("Mihai", "Ghilencea", 1243), Passenger("Teodora", "Catanas", 1244), Passenger("Diana", "Grigore", 1245)]
+    assert airport.filterByName("G") == [Passenger("Gabi", "Hanu", 1242), Passenger("Diana", "Grigore", 1245)], "Should be " + str([Passenger("Gabi", "Hanu", 1242), Passenger("Diana", "Grigore", 1245)]) + ", but it is " + str(airport.filterByName("G")) + "(test_filterByName)"
+    assert airport.filterByName("H") == [Passenger("Gabi", "Hanu", 1242)], "Should be " + str([Passenger("Gabi", "Hanu", 1242)]) + ", but it is " + str(airport.filterByName("H")) + "(test_filterByName)"
+    assert airport.filterByName("I") == [], "Should be empty, but it is " + str(airport.filterByName("I")) + "(test_filterByName)"
+
+def test_filterByPlanes():
+    airport = Airport()
+    p1 = Plane(1, "Boeing", "WizzAir", 100, "Bucharest")
+    p2 = Plane(2, "Airbus", "BlueAir", 200, "Paris")
+    p3 = Plane(3, "Boeing", "WizzAir", 150, "London")
+    airport.addPlane = p1
+    airport.addPlane = p2
+    airport.addPlane = p3
+    p1.addPassenger = [Passenger("John", "Doe", 1234), Passenger("Jane", "Smith", 1235), Passenger("John", "Smith", 1236), Passenger("Jane", "Doe", 1237) ]
+    p2.addPassenger = [Passenger("Raluca", "Cret", 1238), Passenger("Alexia", "Bora", 1239), Passenger("Carla", "Lupu", 1240), Passenger("Ioana", "Giurgea", 1241)]
+    p3.addPassenger = [Passenger("Gabi", "Hanu", 1242), Passenger("Mihai", "Ghilencea", 1243), Passenger("Teodora", "Catanas", 1244), Passenger("Diana", "Grigore", 1245)]
+    assert airport.filterPlanes("John", "Doe") == [p1], "Should be " + str([p1]) + ", but it is " + str(airport.filterPlanes("John", "Doe")) + "(test_filterByPlanes)"
+    assert airport.filterPlanes("Mihai", "Ghilencea") == [p3], "Should be " + str([p3]) + ", but it is " + str(airport.filterPlanes("Mihai", "Ghilencea")) + "(test_filterByPlanes)"
+    assert airport.filterPlanes("Gabi", "Manu") == [], "Should be empty, but it is " + str(airport.filterPlanes("Gabi", "Manu")) + "(test_filterByPlanes)"
 
 def testAll():
     test_addPassenger()
@@ -175,4 +216,9 @@ def testAll():
     test_sortBySeats()
     test_sortBySubString()
     test_sortByConcatenation()
-    print("All tests passed")
+    test_filterByPassport()
+    test_filterByName
+    test_filterByPlanes()
+    print(Fore.LIGHTGREEN_EX + "All tests passed" + Style.RESET_ALL)
+    sleep(1)
+    system("cls || clear")

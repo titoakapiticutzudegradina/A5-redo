@@ -89,3 +89,34 @@ class Airport:
     #Output: -
     def sortByConcatenation(self):
         sortf(self.planes, key = lambda x : x.concatenation())
+
+    #filter the planes that have passengers with the passport starting with thw same 3 characters
+    #Input: chr - int
+    #Output: a list of planes
+    def filterByPassport(self, chr):
+        results = self.planes
+        if type(chr) != int:
+            raise ValueError("Argument must be an integer")
+        return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : str(y.passport).startswith(str(chr)))) != 0)
+    
+    #Filtter passengers from a given plane for which the first or last name contains a string
+    #Input: id - int, string - string
+    #Output: a list of passengers
+    def filterByName(self, id, string):
+        if type(id) != int:
+            raise ValueError("Argument must be an integer")
+        if type(string) != str:
+            raise ValueError("Argument must be a string")
+        for plane in self.planes:
+            if plane.id == id:
+                results = plane.passengers
+        return filterf(results, key = lambda x : string in x.firstName or string in x.lastName)
+    
+    #Filter plane/planes where there  is a passenger with a given name
+    #Input; firstName - string, lastName - string
+    #Output: a list of planes
+    def filterPlanes(self, firstName, lastName):
+        results = self.planes
+        if type(firstName) != str or type(lastName) != str:
+            raise ValueError("Argument must be a string")
+        return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName == firstName and y.lastName == lastName)) != 0)
