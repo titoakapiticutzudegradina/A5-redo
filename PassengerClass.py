@@ -1,3 +1,4 @@
+from colorama import Fore, Style
 
 class Passenger:
     def __init__(self,firstName, lastname, passport):
@@ -27,7 +28,7 @@ class Passenger:
         self.__passport = passport
 
     def __str__(self):
-        return f"{self.__firstName} {self.__lastName} {self.__passport}\n"
+        return f"{Fore.LIGHTMAGENTA_EX}{self.__firstName} {self.__lastName}{Fore.LIGHTGREEN_EX} {self.__passport}{Style.RESET_ALL}\n"
     def __repr__(self):
         return str(self)
     

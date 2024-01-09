@@ -1,6 +1,7 @@
 from PlaneClass import Plane
 from PassengerClass import Passenger
 from Logic import *
+from colorama import Fore, Style
 
 class Airport:
     def __init__(self):
@@ -14,10 +15,13 @@ class Airport:
     #Input: plane - Plane  
     #Output: -
     def addPlane(self, plane):
+        for p in self.planes:
+            if p.id == plane.id:
+                raise Exception(Fore.RED + "Plane already exists" + Style.RESET_ALL)
         if type(plane) == Plane:
             self.planes.append(plane)
         else:
-            raise ValueError("Argument must be a Plane")
+            raise ValueError(Fore.RED + "Argument must be a Plane" + Style.RESET_ALL)
 
     #Print all the planes in the airport
     #Input: -
@@ -31,21 +35,21 @@ class Airport:
     #Output: -
     def removePlane(self, id):
         if type(id) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         for plane in self.planes:
             if plane.id == id:
                 self.planes.remove(plane)
                 return
-        raise Exception("Plane not found")
+        raise Exception(Fore.RED + "Plane not found" + Style.RESET_ALL)
     
     #Update a plane from the airport
     #Input: id - int, newplane - Plane
     #Output: -
     def updatePlane(self, id, newplane):
         if type(id) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         if type(newplane) != Plane:
-            raise ValueError("Argument must be a Plane")
+            raise ValueError(Fore.RED + "Argument must be a Plane" + Style.RESET_ALL)
         for plane in self.planes:
             if plane.id == id:
                 plane.name = newplane.name
@@ -53,7 +57,7 @@ class Airport:
                 plane.seats = newplane.seats
                 plane.destination = newplane.destination
                 return
-        raise Exception("Plane not found")
+        raise Exception(Fore.RED + "Plane not found" + Style.RESET_ALL)
     
     def __str__(self):
         return f" {' '.join(str(plane) for plane in self.planes)}"
@@ -63,7 +67,7 @@ class Airport:
     #Output: -
     def sortByLastName(self, id):
         if type(id) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         for plane in self.planes:
             if plane.id == id:
                 sortf(plane.passengers, key = lambda x: x.lastName)
@@ -81,7 +85,7 @@ class Airport:
     #Output: -
     def sortBySubString(self, substring):
         if type(substring) != str:
-            raise ValueError("Argument must be a string")
+            raise ValueError(Fore.RED + "Argument must be a string" + Style.RESET_ALL)
         sortf(self.planes, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName.startswith(substring))), reverse = True)
 
     #Sort the planes according to the string obtained by concatenation of the number of passengers in the plane and the destination
@@ -96,7 +100,7 @@ class Airport:
     def filterByPassport(self, chr):
         results = self.planes
         if type(chr) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : str(y.passport).startswith(str(chr)))) != 0)
     
     #Filtter passengers from a given plane for which the first or last name contains a string
@@ -104,9 +108,9 @@ class Airport:
     #Output: a list of passengers
     def filterByName(self, id, string):
         if type(id) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         if type(string) != str:
-            raise ValueError("Argument must be a string")
+            raise ValueError(Fore.RED + "Argument must be a string" + Style.RESET_ALL)
         for plane in self.planes:
             if plane.id == id:
                 results = plane.passengers
@@ -118,5 +122,6 @@ class Airport:
     def filterPlanes(self, firstName, lastName):
         results = self.planes
         if type(firstName) != str or type(lastName) != str:
-            raise ValueError("Argument must be a string")
+            raise ValueError(Fore.RED + "Argument must be a string" + Style.RESET_ALL)
         return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName == firstName and y.lastName == lastName)) != 0)
+

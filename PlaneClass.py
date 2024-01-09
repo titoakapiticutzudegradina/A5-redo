@@ -1,4 +1,5 @@
 from PassengerClass import Passenger
+from colorama import Fore, Style
 
 #Plane class has the information about a plane(id, name, company, seats, destination, passengers)
 class Plane:
@@ -55,20 +56,20 @@ class Plane:
             if len(self.__passengers) < self.__seats:
                 self.__passengers.append(passenger)
             else:
-                raise Exception("Plane is full")
+                raise Exception(Fore.RED + "Plane is full" + Style.RESET_ALL)
         if type(passenger) == list:
             for p in passenger:
                 if len(self.__passengers) < self.__seats:
                     self.__passengers.append(p)
                 else:
-                    raise Exception("Plane is full")
+                    raise Exception(Fore.RED + "Plane is full" + Style.RESET_ALL)
 
     def printPlane(self):
-        return f"Id: {self.__id} Name: {self.__name} Company: {self.__company} Seats: {self.__seats} Destination: {self.__destination}"
+        return f"Id: {Fore.LIGHTRED_EX}{self.__id}{Style.RESET_ALL} Name: {Fore.LIGHTMAGENTA_EX}{self.__name}{Style.RESET_ALL} Company: {self.__company} Seats: {self.__seats} Destination: {Fore.LIGHTYELLOW_EX}{self.__destination}{Style.RESET_ALL}"
 
     def __str__(self):
         whatever = ' '.join([str(passenger) for passenger in self.__passengers])
-        return f"Id: {self.__id} Name: {self.__name} Company: {self.__company} Seats: {self.__seats} Destination: {self.__destination}\nPassenger:\n {whatever}"
+        return f"Id: {Fore.LIGHTRED_EX}{self.__id}{Style.RESET_ALL} Name: {Fore.LIGHTMAGENTA_EX}{self.__name}{Style.RESET_ALL} Company: {self.__company} Seats: {self.__seats} Destination: {Fore.LIGHTYELLOW_EX}{self.__destination}{Style.RESET_ALL}\nPassenger:\n {whatever}"
     def __repr__(self):
         return str(self)
     
@@ -78,26 +79,26 @@ class Plane:
     #Removes a passenger from the plane(by passport)
     def removePassenger(self, passport):
         if type(passport) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         for passenger in self.__passengers:
             if passenger.passport == passport:
                 self.__passengers.remove(passenger)
                 return
-        raise Exception("Passenger not found")
+        raise Exception(Fore.RED + "Passenger not found" + Style.RESET_ALL)
 
     #Updates a passenger in the plane(by passport)
     def updatePassenger(self, passport, newPassenger):
         if type(passport) != int:
-            raise ValueError("Argument must be an integer")
+            raise ValueError(Fore.RED + "Argument must be an integer" + Style.RESET_ALL)
         if type(newPassenger) != Passenger:
-            raise ValueError("Argument must be a Passenger")
+            raise ValueError(Fore.RED + "Argument must be a Passenger" + Style.RESET_ALL)
         for passenger in self.__passengers:
             if passenger.passport == passport:
                 passenger.firstName = newPassenger.firstName
                 passenger.lastName = newPassenger.lastName
                 passenger.passport = newPassenger.passport
                 return
-        raise Exception("Passenger not found")
+        raise Exception(Fore.RED + "Passenger not found" + Style.RESET_ALL)
     
     #Concatenation of seats and the destination
     def concatenation(self):
