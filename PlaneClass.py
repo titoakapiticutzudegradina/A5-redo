@@ -98,7 +98,7 @@ class Plane:
                 passenger.lastName = newPassenger.lastName
                 passenger.passport = newPassenger.passport
                 return
-        raise Exception(Fore.RED + "Passenger not found" + Style.RESET_ALL)
+        #raise Exception(Fore.RED + "Passenger not found" + Style.RESET_ALL)
     
     #Concatenation of seats and the destination
     def concatenation(self):

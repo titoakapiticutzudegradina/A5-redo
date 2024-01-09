@@ -11,7 +11,7 @@ airport.planes[0].addPassenger = [Passenger( "Anisia", "Bantu", 1234), Passenger
 airport.addPlane = Plane(2, "Plane 356", "HGMG", 15, "New York")
 airport.planes[1].addPassenger = [Passenger("Jhon", "Doe", 3876), Passenger("Jane", "Smith", 3875), Passenger("Jhon", "Smith", 7864), Passenger("Coco", "Cioco", 1234)]
 airport.addPlane = Plane(3, "Private Jet", "CM", 7, "Virginia")
-airport.planes[2].addPassenger = [Passenger("Aron", "Hotchner", 1234), Passenger("Derek", "Morgan", 1234),Passenger("Spancer", "Ried", 1780), Passenger("Penelope", "Garcia", 1234), Passenger("Emily", "Prentiss", 1234)]
+airport.planes[2].addPassenger = [Passenger("Aron", "Hotchner", 1234), Passenger("Derek", "Morgan", 1234),Passenger("Spencer", "Ried", 1780), Passenger("Penelope", "Garcia", 1234), Passenger("Emily", "Prentiss", 1234)]
 airport.addPlane = Plane(4, "Plane 854", "ASD", 10, "Amsterdam")
 airport.planes[3].addPassenger = [Passenger("Carla", "Lupu", 4444), Passenger("Raluca", "Cret", 4446), Passenger("Alexia", "Bora", 4445), Passenger("Andreea", "Bora", 4447)]
 airport.addPlane = Plane(5, "Plane 123", "MAG", 10, "Amsterdam")
@@ -34,6 +34,7 @@ def menu():
     print("12. Search for planes with passengers that have the same 3 characters in their passport")
     print("13. Search for a passengers in a plane ")
     print("14. Search for the plane/planes of a passenger")
+    print("15. Print everything")
     print(Style.RESET_ALL)
 
 def UI():
@@ -168,8 +169,8 @@ def UI():
                 passport = int(input("Give the passport of the passenger you want to update: "))
                 firstName = input("Give the new first name of the passenger: ")
                 lastName = input("Give the new last name of the passenger: ")
-                passport = int(input("Give the new passport of the passenger: "))
-                newPassenger = Passenger(firstName, lastName, passport)
+                newpassport = int(input("Give the new passport of the passenger: "))
+                newPassenger = Passenger(firstName, lastName, newpassport)
                 for plane in airport.planes:
                     if plane.id == id:
                         plane.updatePassenger(passport, newPassenger)
@@ -244,7 +245,11 @@ def UI():
                 print()
                 sleep(0.01)
                 print(airport.filterPlanes(firstName, lastName))
-            elif cmd<0 or cmd>14:
+            elif cmd == 15:
+                for plane in airport.planes:
+                    print(plane)
+                    print()
+            elif cmd<0 or cmd>15:
                 print(Fore.RED + "Invalid command!" + Style.RESET_ALL)   
     except ValueError as ve:
         print(Fore.RED + str(ve) + Style.RESET_ALL)

@@ -125,3 +125,4 @@ class Airport:
             raise ValueError(Fore.RED + "Argument must be a string" + Style.RESET_ALL)
         return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName == firstName and y.lastName == lastName)) != 0)
 
+    

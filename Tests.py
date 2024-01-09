@@ -220,5 +220,5 @@ def testAll():
     test_filterByName
     test_filterByPlanes()
     print(Fore.LIGHTGREEN_EX + "All tests passed" + Style.RESET_ALL)
-    sleep(1)
+    sleep(2)
     system("cls || clear")
