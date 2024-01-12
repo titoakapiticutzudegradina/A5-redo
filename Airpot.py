@@ -125,4 +125,17 @@ class Airport:
             raise ValueError(Fore.RED + "Argument must be a string" + Style.RESET_ALL)
         return filterf(results, key = lambda x : len(filterf(x.passengers, key = lambda y : y.firstName == firstName and y.lastName == lastName)) != 0)
 
-    
+    #Form groups of k passengers from the same plane but with different last names
+    #Input: k- int
+    #Output: a list of lists
+    def passGroup(self, k:int, index = 0, group=[], groups = []):
+        if len(group) == k:
+            groups.append(group[:])
+            return
+        for i in range(0,len(self.planes)):
+            for j in range(0,len(self.planes[i].passengers)-1):
+                if self.planes[i].passengers[j].lastName != self.planes[i].passengers[index].lastName:
+                    group.append(self.planes[i].passengers[j])
+                    self.passGroup(k, i+1, group, groups)
+                    group.pop()
+        return groups
